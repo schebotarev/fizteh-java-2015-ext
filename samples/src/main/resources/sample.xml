@@ -1,0 +1,15 @@
+<?xmlversion= "1.0" encoding= "UTF-8" ?>
+<root xmlns:fivt="http://fivt.fizteh.ru/common">
+    <element attribute="attributevalue&quot; ">
+        text
+        <!--comment-->
+        <![CDATA[
+            <escaped_text/>
+            <![CDATA[
+                <escaped_text/>
+            ]] >
+            <!-- no escape for "]] >" w/o space -->
+        ]]>
+    </element>
+    <fivt:element/>
+</root>
