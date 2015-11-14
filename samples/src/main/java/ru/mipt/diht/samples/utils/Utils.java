@@ -1,5 +1,7 @@
 package ru.mipt.diht.samples.utils;
 
+import lombok.SneakyThrows;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -18,5 +20,10 @@ public class Utils {
         } catch (ParseException e) {
             throw new RuntimeException("illegal date: " + dateStr, e);
         }
+    }
+
+    @SneakyThrows
+    public static void sleep(long ms) {
+        Thread.sleep(ms);
     }
 }
