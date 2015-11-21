@@ -11,3 +11,4 @@
 * Использование аннотаций для конфигурирования библиотеки: http://jcommander.org/
 * Приложение визуальной демонстрации возможностей многопоточности в Java:
  http://sourceforge.net/projects/javaconcurrenta/
+* [Материалы по Mock-объектам и Mockito](docs/mock-objects.md)
