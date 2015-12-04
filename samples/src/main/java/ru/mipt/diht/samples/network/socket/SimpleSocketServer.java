@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.concurrent.Executors;
 
 /**
@@ -24,9 +25,9 @@ import java.util.concurrent.Executors;
  */
 @Slf4j
 public class SimpleSocketServer<T> implements AutoCloseable {
-    private ServerSocket socket;
+    private final ServerSocket socket;
     // В этом параметре будет реализация обработчика соединений. Примеры: echo-server, http-date-server
-    private SocketProcessor<T> processor;
+    private final SocketProcessor<T> processor;
 
     @SneakyThrows
     public SimpleSocketServer(int port, SocketProcessor<T> processor) {
@@ -40,9 +41,16 @@ public class SimpleSocketServer<T> implements AutoCloseable {
         // пока поток не прерван принимаем в цикле входящие соединения
         while (!Thread.interrupted()) {
             // socket.accept() игнорирует прерывания (by design), так что для корректного завершения
-            // нужно явно вызывать .close из другого потока, будет генерироватьсы ConnectException
+            // нужно явно вызывать .close из другого потока, будет генерироваться ConnectException
             // (другая альтернатива - установить у сокета soTimeout и обрабатывать его в данном цикле, внешний вызов close не потребуется)
-            processConnection(socket.accept());
+            try {
+                processConnection(socket.accept());
+            } catch (SocketException e) {
+                if (socket.isClosed()) {
+                    // был вызван close, завершаем работу
+                    break;
+                }
+            }
         }
         log.info("server has been interrupted");
     }
@@ -63,10 +71,9 @@ public class SimpleSocketServer<T> implements AutoCloseable {
     public void close() {
         // из try-with конструкции в обрабатывающем соединения потоке и необходимости во внешнем прерывании данного потока
         // (т.е. из другого потока) вызов close может производиться из обоих
-        if (socket != null) {
+        if (!socket.isClosed()) {
             log.info("closing server: {}", socket.getLocalPort());
             socket.close();
-            socket = null;
         }
     }
 
