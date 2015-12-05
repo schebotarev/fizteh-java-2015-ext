@@ -2,6 +2,8 @@ package ru.mipt.diht.samples.utils;
 
 import lombok.SneakyThrows;
 
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -13,6 +15,8 @@ import java.util.concurrent.TimeUnit;
  * @since 05.11.2015
  */
 public class Utils {
+    public static final Charset UTF8 = StandardCharsets.UTF_8;
+
     /*
     * Возвращает объект Date с указанной в формате "yyyy.MM.dd" датой.
     **/
