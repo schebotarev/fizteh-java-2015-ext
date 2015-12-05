@@ -12,3 +12,4 @@
 * Приложение визуальной демонстрации возможностей многопоточности в Java:
  http://sourceforge.net/projects/javaconcurrenta/
 * [Материалы по Mock-объектам и Mockito](docs/mock-objects.md)
+* Примеры работы с NIO и многим другим базовым модулям JDK на сайте [jenkov.com](http://tutorials.jenkov.com/java-nio/index.html)
